@@ -7,8 +7,12 @@ class Light {
     return light;
   }
 
+  static createHemisphereLight(skyColor = 0xffffff, groundColor = 0x444444, intensity = 0.6) {
+    const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+    return light;
+  }
+
   static createDirectionalLight(x = 0, y = 2, z = 2, color = 0xffffff, intensity = 1) {
-    
     const light = new THREE.DirectionalLight(color, intensity);    
     light.position.set(x, y, z);
     light.castShadow = true;
@@ -21,7 +25,6 @@ class Light {
     helper.visible = false;
     return helper;
   }
-
 
 }
 

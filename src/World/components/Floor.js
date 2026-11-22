@@ -1,36 +1,32 @@
-import * as THREE from 'three';
+import {
+  PlaneGeometry,
+  MeshStandardMaterial,
+  Mesh,
+  GridHelper,
+  Group,
+} from 'three';
 
-class Floor {
-    static createBoxFloor(width = 10, height = 0.5, depth = 8, receiveShadow = true) {
-        const geometry = new THREE.BoxGeometry(width, height, depth);
+function createFloor() {
+  const floorGroup = new Group();
 
-        const material = new THREE.MeshPhongMaterial({
-            color: 'skyblue'
-        });
+  // Piso porcelanato claro
+  const geometry = new PlaneGeometry(5, 5);
+  const material = new MeshStandardMaterial({
+    color: 0xe6e6e6,
+    roughness: 0.4,
+    metalness: 0.1,
+  });
 
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotation.x = -Math.PI / 2; // Rotate -90 degrees around the X-axis
+  const floorMesh = new Mesh(geometry, material);
+  floorMesh.rotation.x = -Math.PI / 2;
+  floorMesh.receiveShadow = true;
 
-        mesh.receiveShadow = true;
+  // Linhas sutis do rejunte do piso
+  const grid = new GridHelper(5, 10, 0xbbbbbb, 0xcccccc);
+  grid.position.y = 0.001;
 
-        return mesh;
-    }
-
-    static createPlaneFloor(width = 10, height = 10, receiveShadow = true) {
-        const geometry = new THREE.PlaneGeometry(width, height);
-
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x808080,
-            side: THREE.DoubleSide
-        });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotation.x = -Math.PI / 2; // Rotate -90 degrees around the X-axis
-
-        mesh.receiveShadow = true;
-
-        return mesh;
-    }
+  floorGroup.add(floorMesh, grid);
+  return floorGroup;
 }
 
-export { Floor };
+export { createFloor };

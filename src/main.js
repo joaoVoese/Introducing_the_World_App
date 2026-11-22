@@ -1,19 +1,19 @@
-import { Exercicio_01 } from './World/Exercicio_01.js';
 import { World } from './World/World.js';
 
-function main() {
-  // Get a reference to the container element
+async function main() {
+  // Obtém a referência do container HTML onde a cena será renderizada
   const container = document.querySelector('#scene-container');
 
-  // 1. Create an instance of the World app
-  //const world = new World(container);
+  // 1. Cria uma instância da aplicação World
+  const world = new World(container);
 
-  //world.render();
+  // 2. Aguarda o carregamento da física (Rapier) e dos modelos 3D
+  await world.init();
 
-  const ex1 = new Exercicio_01(container);
-  ex1.render();
-
-
+  // 3. Inicia o loop de renderização
+  world.render();
 }
 
-main();
+main().catch((err) => {
+  console.error('Erro ao inicializar a cena:', err);
+});
